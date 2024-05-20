@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "administracionproyectos"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+    volumes:
+      - ./query.sql:/docker-entrypoint-initdb.d/query.sql
+    container_name: administracionproyectos

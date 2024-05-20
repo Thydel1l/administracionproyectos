@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row mt-5">
+        {{#if usuarios}}
+        <div class="col-md-3">
+            <table class="table text-center" style="width: 1200px;">
+                <thead>
+                    <tr class="table-dark">
+                        <th> ID </th>
+                        <th> Nombre </th>
+                        <th> Apellido </th>
+                        <th> Email </th>
+                        <th> Rol </th>
+                        <th> Edad </th>
+                        <th> Acciones </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each usuarios}} 
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{nombre}}</td>
+                            <td>{{apellidos}}</td>
+                            <td>{{email}}</td>
+                            <td>{{rol}}</td>
+                            <td>{{edad}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="/edit/{{id}}" class="btn btn-warning p-3"> 
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </a>
+                                    <a href="/delete/{{id}}" class="btn btn-success p-3"> 
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
+                                    <script>
+                                        function confirmDelete(userId) {
+                                            if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+                                                window.location.href = '/delete/' + userId;
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+                <tfoot>
+                    <tr class="table-dark" style="width: 1200px;">
+                        <td colspan="7"> Registro de Usuarios </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        {{else}}
+            <div class="card text-center mx-auto" style="width: 150px">
+                <div class="card-header">
+                    <h3> Debes Crear un usuario </h3>
+                </div>
+                <div class="card-body">
+                    <p> Presiona este boton para que puedas registrar a una persona en la aplicacion </p>
+                    <a href="#" class="btn btn-primary"> Ir a Crear </a>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</div>

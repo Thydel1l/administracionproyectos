@@ -1,0 +1,45 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3 class="text-uppercase"> Crear Nuevo Usuario </h3>
+                </div>
+                <div class="card-body">
+                    <form action="/add" method="post">
+                        <div class="input-group mt-2">
+                            <label for="name" class="input-group-text"> Nombres </label>
+                            <input class="form-control" type="text" name="name" id="name" placeholder="Ejemplo: Lucho" autofocus required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <label for="lastname" class="input-group-text"> Apellidos </label>
+                            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Ejemplo: Perez" autofocus required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <label for="email" class="input-group-text"> Email </label>
+                            <input class="form-control" type="email" name="email" id="email" placeholder="Ejemplo: Lucho@correo.com" autofocus required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <label for="contrasena" class="input-group-text"> Contraseña </label>
+                            <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="" required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <label for="edad" class="input-group-text"> Edad </label>
+                            <input class="form-control" type="number" name="edad" id="edad" placeholder="" autofocus required>
+                        </div>
+                        <div class="input-group mt-2">
+                            <label for="rol" class="input-group-text"> Rol </label>
+                            <select class="form-control" id="rol" name="rol" required>
+                                <option value="admin">Admin</option>
+                                <option value="normal">Normal</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-4 d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

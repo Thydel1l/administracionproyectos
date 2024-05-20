@@ -9,8 +9,8 @@ router.get('/add', (req, res) => {
 router.get('/list', async (req, res) => {
     try {
         const [result] = await pool.promise().query('SELECT id, nombre, apellidos, email, rol, edad FROM usuarios');
-        const usuarios = result; 
-        res.render('usuarios/list', { usuarios }); 
+        const usuarios = result;
+        res.render('usuarios/list', { usuarios });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -26,13 +26,13 @@ router.post('/add', async (req, res) => {
     }
 });
 // // Mostrar formulario de edición de usuario
-router.get('/edit/:id', async (req, res) => {   
+router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
+
     try {
         const [result] = await pool.promise().query('SELECT * FROM usuarios WHERE id = ?', [id]);
         if (result.length > 0) {
             res.render('usuarios/edit', { usuario: result[0] });
-            
         } else {
             res.status(404).send('Usuario no encontrado');
         }
@@ -43,13 +43,15 @@ router.get('/edit/:id', async (req, res) => {
 
 // Manejar la actualización de un usuario
 router.post('/edit/:id', async (req, res) => {
+    console.log("ENTRO AQUI MI KING");
     const { id } = req.params;
     const { name, lastname, email, contrasena, edad, rol } = req.body;
+    console.log(req.body);
     try {
-        const hashedPassword = await bcrypt.hash(contrasena, 10);
-        await pool.promise().query('UPDATE usuarios SET nombre = ?, apellidos = ?, email = ?, contrasena = ?, edad = ?, rol = ? WHERE id = ?', 
+        const hashedPassword = await bcrypt.hash('123', 10);
+        await pool.promise().query('UPDATE usuarios SET nombre = ?, apellidos = ?, email = ?, contrasena = ?, edad = ?, rol = ? WHERE id = ?',
             [name, lastname, email, hashedPassword, edad, rol, id]);
-        res.redirect('/usuarios/list');
+        res.redirect('/list');
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -60,10 +62,10 @@ router.get('/delete/:id', async (req, res) => {
     try {
         // 1. Eliminar tareas relacionadas
         await pool.promise().query('DELETE FROM tareas WHERE id_proyecto = ?', [id]);
-        
+
         // 2. Eliminar proyecto
         await pool.promise().query('DELETE FROM proyectos WHERE id = ?', [id]);
-        
+
         res.redirect('/list');
     } catch (err) {
         res.status(500).json({ message: err.message });

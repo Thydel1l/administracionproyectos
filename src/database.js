@@ -1,9 +1,9 @@
 import { createPool } from "mysql2";
 const pool = createPool({
-    host:'localhost',
-    port: '3307',
-    user: 'root',
-    password:'48770660',
+    host: '127.0.0.1',
+    port: '3310',
+    user: 'user',
+    password: 'password',
     database: 'administracionproyectos'
 });
 export default pool;

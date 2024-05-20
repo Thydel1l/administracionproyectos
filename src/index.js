@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import usuariosroutes from './routes/usuarios.routes.js';
-import './helpers/handlebars.js'; 
+import './helpers/handlebars.js';
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -19,7 +19,7 @@ app.engine('.hbs', engine({
     helpers: {
         ifCond: function (v1, operator, v2, options) {
             switch (operator) {
-                case '==':
+                case 'eq':
                     return (v1 == v2) ? options.fn(this) : options.inverse(this);
                 case '===':
                     return (v1 === v2) ? options.fn(this) : options.inverse(this);
@@ -47,7 +47,6 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
 app.get('/', (req, res) => {
     res.render('index');
 });

@@ -23,3 +23,11 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
             return options.inverse(this);
     }
 });
+
+
+// Registrar el helper `eq`
+Handlebars.registerHelper('eq', function (v1, v2) {
+    return v1 === v2;
+});
+
+export default Handlebars;

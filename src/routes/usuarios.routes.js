@@ -33,7 +33,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id',roladmin, async (req, res) => {
     const { id } = req.params;
     try {
         const [result] = await pool.promise().query('SELECT * FROM usuarios WHERE id = ?', [id]);

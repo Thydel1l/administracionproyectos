@@ -25,7 +25,7 @@ router.post('/add', async (req, res) => {
         const hashedPassword = await bcrypt.hash(contrasena, 10);
         await pool.promise().query('INSERT INTO usuarios (nombre, apellidos, email, contrasena, rol, edad) VALUES (?, ?, ?, ?, ?, ?)', [name, lastname, email, hashedPassword, rol, edad]);
         req.flash('success_msg', 'Usuario agregado correctamente');
-        res.redirect('/list');
+        res.redirect('/login');
     } catch (err) {
         console.error('Error al agregar usuario:', err.message);
         req.flash('error_msg', 'Error al agregar usuario');
@@ -57,7 +57,7 @@ router.post('/edit/:id', async (req, res) => {
         const hashedPassword = await bcrypt.hash('123', 10);
         await pool.promise().query('UPDATE usuarios SET nombre = ?, apellidos = ?, email = ?, contrasena = ?, edad = ?, rol = ? WHERE id = ?',
             [name, lastname, email, hashedPassword, edad, rol, id]);
-        res.redirect('/list');
+        res.redirect('/login');
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -73,9 +73,9 @@ router.get('/delete/:id', async (req, res) => {
             await pool.promise().query('DELETE FROM tareas WHERE id_proyecto = ?', [id]);
             await pool.promise().query('DELETE FROM proyectos WHERE id = ?', [id]);
             req.flash('success_msg', 'Usuario eliminado correctamente');
-            res.redirect('/list');
+            res.redirect('/login');
         } else {
-            res.redirect('/list');
+            res.redirect('/login');
         }
     } catch (err) {
         console.error('Error al eliminar usuario:', err.message);

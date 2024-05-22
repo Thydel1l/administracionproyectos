@@ -1,0 +1,33 @@
+{{#if success_msg}}
+    <div class="alert alert-success">{{success_msg}}</div>
+{{/if}}
+{{#if error_msg}}
+    <div class="alert alert-danger">{{error_msg}}</div>
+{{/if}}
+
+<h1>Bienvenido Usuario {{userId}}</h1>
+
+<h2>Tus Proyectos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each proyectos}}
+            <tr>
+                <td>{{this.nombre}}</td>
+                <td>{{this.descripcion}}</td>
+                <td>{{this.fechainicio}}</td>
+                <td>{{this.fechafin}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<a href="/proyectos/add/{{userId}}" class="btn btn-primary">Añadir Proyecto</a>

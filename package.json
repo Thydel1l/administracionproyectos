@@ -12,8 +12,11 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
     "express": "^4.19.2",
+    "express-flash": "^0.0.2",
     "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.9.7"
   },

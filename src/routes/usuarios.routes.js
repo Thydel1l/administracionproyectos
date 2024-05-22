@@ -8,17 +8,17 @@ router.get('/add', (req, res) => {
     res.render('usuarios/add');
 });
 
-router.get('/list', async (req, res) => {
+router.get('/usuarios/list', roladmin, async (req, res) => {
     try {
         const [result] = await pool.promise().query('SELECT id, nombre, apellidos, email, rol, edad FROM usuarios');
         const usuarios = result;
         res.render('usuarios/list', { usuarios });
     } catch (err) {
         console.error('Error al obtener la lista de usuarios:', err.message);
-        res.status(500).json({ message: err.message });
+        req.session.error_msg = 'Error en el servidor';
+        res.redirect('/login');
     }
 });
-
 router.post('/add', async (req, res) => {
     try {
         const { name, lastname, email, contrasena, rol, edad } = req.body;
@@ -99,14 +99,11 @@ router.post('/login', async (req, res) => {
                 req.session.userId = user.id;
                 req.session.userRole = user.rol;
                 console.log(user.rol);
-                if(user.rol=="admin"){
-                    const [result] = await pool.promise().query('SELECT id, nombre, apellidos, email, rol, edad FROM usuarios');
-                    const usuarios = result;
-                    res.render('usuarios/list', { usuarios });
-                }else{
+                if (user.rol === 'admin') {
+                    res.redirect('/usuarios/list');
+                } else {
                     res.redirect(`/user/${user.id}`);
                 }
-                
             } else {
                 req.session.error_msg = 'Contraseña incorrecta';
                 res.redirect('/login');
@@ -121,6 +118,15 @@ router.post('/login', async (req, res) => {
         res.redirect('/login');
     }
 });
+
+function roladmin(req, res, next) {
+    if (req.session.userRole && req.session.userRole === 'admin') {
+        next();
+    } else {
+        req.session.error_msg = 'Acceso denegado';
+        res.redirect('/login');
+    }
+}
 
 // Ruta para mostrar la vista personalizada de un usuario
 router.get('/user/:id', async (req, res) => {

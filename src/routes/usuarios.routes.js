@@ -34,19 +34,18 @@ router.post('/add', async (req, res) => {
 });
 
 router.get('/edit/:id', async (req, res) => {
-    // const { id } = req.params;
-    // try {
-    //     const [result] = await pool.promise().query('SELECT * FROM usuarios WHERE id = ?', [id]);
-    //     if (result.length > 0) {
-    //         res.render('usuarios/edit', { usuario: result[0] });
-    //     } else {
-    //         res.status(404).send('Usuario no encontrado');
-    //     }
-    // } catch (err) {
-    //     console.error('Error al obtener datos de usuario para edición:', err.message);
-    //     res.status(500).json({ message: err.message });
-    // }
-    console.log("123");
+    const { id } = req.params;
+    try {
+        const [result] = await pool.promise().query('SELECT * FROM usuarios WHERE id = ?', [id]);
+        if (result.length > 0) {
+            res.render('usuarios/edit', { usuario: result[0] });
+        } else {
+            res.status(404).send('Usuario no encontrado');
+        }
+    } catch (err) {
+        console.error('Error al obtener datos de usuario para edición:', err.message);
+        res.status(500).json({ message: err.message });
+    }
 });
 
 router.post('/edit/:id', async (req, res) => {
@@ -99,7 +98,15 @@ router.post('/login', async (req, res) => {
             if (match) {
                 req.session.userId = user.id;
                 req.session.userRole = user.rol;
-                res.redirect(`/user/${user.id}`);
+                console.log(user.rol);
+                if(user.rol=="admin"){
+                    const [result] = await pool.promise().query('SELECT id, nombre, apellidos, email, rol, edad FROM usuarios');
+                    const usuarios = result;
+                    res.render('usuarios/list', { usuarios });
+                }else{
+                    res.redirect(`/user/${user.id}`);
+                }
+                
             } else {
                 req.session.error_msg = 'Contraseña incorrecta';
                 res.redirect('/login');

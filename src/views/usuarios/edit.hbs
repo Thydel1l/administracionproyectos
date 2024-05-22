@@ -35,9 +35,8 @@
                         <div class="input-group mt-2">
                             <label for="rol" class="input-group-text"> Rol </label>
                             <select class="form-control" id="rol" name="rol" required>
-                                <option value="admin" {{#if (eq usuario.rol 'admin' )}}selected{{/if}}> Admin </option>
-                                <option value="normal" {{#if (eq usuario.rol 'normal' )}}selected{{/if}}> Normal
-                                </option>
+                                <option value="admin">Admin</option>
+                                <option value="normal"> Normal</option>
                             </select>
                         </div>
                         <div class="form-group mt-4 d-grid gap-2">
